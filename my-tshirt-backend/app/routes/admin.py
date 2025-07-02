@@ -46,7 +46,7 @@ def get_all_orders(db: Session = Depends(get_db), admin=Depends(get_current_admi
                 tshirt = db.query(tshirt_model.TShirt).filter_by(id=item.item_id).first()
                 if tshirt:
                     item_info["name"] = tshirt.name
-                    item_info["image"] = tshirt.imagell
+                    item_info["image"] = tshirt.image
 
             elif item.item_type == "custom":
                 custom = db.query(custom_model.CustomDesign).filter_by(id=item.item_id).first()
