@@ -1,0 +1,55 @@
+.custom-container {
+    max-width: 600px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .custom-preview {
+    position: relative;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .tshirt-image {
+    width: 300px;
+    height: auto;
+  }
+  
+  .custom-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 22px;
+    font-weight: bold;
+  }
+  
+  .custom-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .custom-form input,
+  .custom-form select {
+    padding: 8px;
+    font-size: 14px;
+  }
+  
+  .custom-form button {
+    padding: 10px;
+    background: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .custom-msg {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  

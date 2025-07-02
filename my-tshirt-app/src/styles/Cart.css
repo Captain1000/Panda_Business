@@ -1,0 +1,189 @@
+:root {
+  --primary: #3b82f6;
+  --danger: #ef4444;
+  --success: #10b981;
+  --light-bg: #f9fafb;
+  --dark-bg: #1f2937;
+  --text: #111827;
+  --text-light: #f9fafb;
+  --card-bg: #ffffff;
+  --card-bg-dark: #374151;
+}
+
+/* Dark mode toggle support */
+body.dark-mode {
+  --card-bg: var(--card-bg-dark);
+  --light-bg: var(--dark-bg);
+  --text: var(--text-light);
+}
+
+.cart-container {
+  padding: 2rem;
+  background-color: var(--light-bg);
+  color: var(--text);
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.cart-container h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.2rem;
+  text-align: center;
+  color: var(--primary);
+}
+
+.cart-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cart-card {
+  display: flex;
+  background: var(--card-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.cart-card:hover {
+  transform: translateY(-3px);
+}
+
+.cart-card img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-right: 1px solid #ddd;
+}
+
+.cart-info {
+  padding: 0.8rem 1rem;
+  flex: 1;
+}
+
+.cart-info h4 {
+  margin-bottom: 0.3rem;
+}
+
+.cart-info p {
+  margin: 0.2rem 0;
+}
+
+.cart-info button {
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  background-color: var(--danger);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.cart-info button:hover {
+  background-color: #dc2626;
+}
+
+.cart-footer {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.cart-footer h3 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: var(--success);
+}
+
+.cart-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.clear-btn,
+.checkout-btn {
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.clear-btn {
+  background-color: var(--danger);
+  color: white;
+}
+
+.clear-btn:hover {
+  background-color: #b91c1c;
+}
+
+.checkout-btn {
+  background-color: var(--primary);
+  color: white;
+}
+
+.checkout-btn:hover {
+  background-color: #2563eb;
+}
+
+.checkout-form {
+  background-color: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin: 2rem auto;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-form input {
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.checkout-form input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.checkout-form button {
+  padding: 0.8rem;
+  background-color: var(--success);
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.checkout-form button:hover {
+  background-color: #059669;
+}
+
+.status-message {
+  text-align: center;
+  font-size: 1.1rem;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  font-size: 1.5rem;
+}

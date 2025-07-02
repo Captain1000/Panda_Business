@@ -1,0 +1,114 @@
+.orders-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fdfdfd;
+}
+
+.orders-title {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 30px;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+}
+
+.no-orders {
+  text-align: center;
+  font-style: italic;
+  color: gray;
+}
+
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.order-card {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.order-status {
+  color: green;
+  text-transform: capitalize;
+}
+
+.order-date {
+  color: #666;
+  font-size: 14px;
+}
+
+.order-address, .order-items {
+  margin-bottom: 15px;
+}
+
+.order-address h4,
+.order-items h4 {
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.order-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  border-top: 1px solid #eee;
+  padding: 12px 0;
+}
+
+.order-item:first-child {
+  border-top: none;
+}
+
+.order-item-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.order-item-placeholder {
+  width: 80px;
+  height: 80px;
+  background-color: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  color: #888;
+}
+
+.order-item-details {
+  flex-grow: 1;
+}
+
+.item-name {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.order-total {
+  margin-top: 15px;
+  font-size: 18px;
+  text-align: right;
+  font-weight: bold;
+  color: #222;
+}

@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+pydantic
+python-jose
+passlib[bcrypt]
+python-multipart
+email-validator
+psycopg2-binary  # If using PostgreSQL in production
+python-dotenv    # For loading env variables from .env file
