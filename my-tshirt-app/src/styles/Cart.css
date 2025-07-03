@@ -10,16 +10,19 @@
   --card-bg-dark: #374151;
   --badge-bg: #e5e7eb;
   --badge-bg-dark: #4b5563;
-  --input-border: #d1d5db;
+  --qty-btn-bg: #e5e7eb;
+  --qty-btn-bg-dark: #4b5563;
+  --qty-text: #1f2937;
+  --qty-text-dark: #f9fafb;
 }
 
-/* Dark mode toggle support */
 body.dark-mode {
   --card-bg: var(--card-bg-dark);
   --light-bg: var(--dark-bg);
   --text: var(--text-light);
   --badge-bg: var(--badge-bg-dark);
-  --input-border: #4b5563;
+  --qty-btn-bg: var(--qty-btn-bg-dark);
+  --qty-text: var(--qty-text-dark);
 }
 
 .cart-container {
@@ -40,12 +43,11 @@ body.dark-mode {
 .cart-list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.2rem;
 }
 
 .cart-card {
   display: flex;
-  flex-wrap: wrap;
   background: var(--card-bg);
   border-radius: 14px;
   overflow: hidden;
@@ -70,62 +72,98 @@ body.dark-mode {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-width: 220px;
 }
 
 .cart-info h4 {
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.6rem;
   font-size: 1.1rem;
+  transition: all 0.3s ease;
 }
 
 .cart-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin: 0.5rem 0;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+  transition: all 0.3s ease;
 }
 
 .badge {
-  display: inline-block;
   background-color: var(--badge-bg);
-  padding: 3px 8px;
+  padding: 4px 10px;
   border-radius: 6px;
   font-size: 0.75rem;
   font-weight: 600;
   color: var(--text);
+  transition: all 0.3s ease;
 }
 
-/* .quantity-input {
-  width: 60px;
-  padding: 5px 8px;
-  font-size: 0.85rem;
-  border: 1px solid var(--input-border);
-  border-radius: 5px;
-  text-align: center;
-  transition: border 0.3s ease;
+.qty-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.quantity-input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
-} */
+.qty-control label {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.qty-buttons {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.qty-btn {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.3rem 0.7rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.qty-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.qty-btn:hover:not(:disabled) {
+  background-color: #2563eb;
+  transform: scale(1.1);
+}
+
+.qty-display {
+  padding: 0.3rem 0.8rem;
+  background-color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
 .cart-info button {
   align-self: flex-start;
-  margin-top: 0.6rem;
   padding: 0.4rem 0.9rem;
   background-color: var(--danger);
   color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: background 0.3s ease;
   font-size: 0.9rem;
+  transition: background 0.3s ease, transform 0.3s ease;
 }
 
 .cart-info button:hover {
   background-color: #dc2626;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 .cart-footer {
@@ -137,6 +175,7 @@ body.dark-mode {
   font-size: 1.4rem;
   margin-bottom: 1.2rem;
   color: var(--success);
+  transition: all 0.3s ease;
 }
 
 .cart-buttons {
@@ -154,7 +193,7 @@ body.dark-mode {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .clear-btn {
@@ -164,6 +203,8 @@ body.dark-mode {
 
 .clear-btn:hover {
   background-color: #b91c1c;
+  transform: translateY(-2px);
+  animation: pulse 0.3s ease-in-out;
 }
 
 .checkout-btn {
@@ -173,6 +214,23 @@ body.dark-mode {
 
 .checkout-btn:hover {
   background-color: #2563eb;
+  transform: translateY(-2px);
+  animation: pulse 0.3s ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  }
+  50% {
+    transform: scale(1.04);
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  }
 }
 
 .checkout-form {
@@ -185,6 +243,18 @@ body.dark-mode {
   flex-direction: column;
   gap: 1.2rem;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  animation: fadeUp 0.5s ease;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .checkout-form h3 {
@@ -195,15 +265,17 @@ body.dark-mode {
 
 .checkout-form input {
   padding: 0.8rem;
-  border: 1px solid var(--input-border);
+  border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 1rem;
-  transition: border-color 0.2s;
+  transition: border-color 0.3s, transform 0.2s ease;
 }
 
 .checkout-form input:focus {
   outline: none;
   border-color: var(--primary);
+  box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
+  transform: scale(1.02);
 }
 
 .checkout-form button {
@@ -214,12 +286,14 @@ body.dark-mode {
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
   font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .checkout-form button:hover {
   background-color: #059669;
+  transform: translateY(-2px);
+  animation: pulse 0.3s ease-in-out;
 }
 
 .status-message {
@@ -236,55 +310,11 @@ body.dark-mode {
   align-items: center;
   height: 50vh;
   font-size: 1.5rem;
-}
-
-.qty-control {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 10px;
-  font-size: 0.95rem;
-}
-
-.qty-control label {
-  font-weight: 500;
-  color: var(--text);
-}
-
-.qty-box {
-  display: flex;
-  align-items: center;
-  background-color: var(--card-bg);
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-}
-
-.qty-box button {
-  background-color: var(--primary);
-  color: white;
-  border: none;
-  padding: 6px 12px;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.qty-box button:hover:not(:disabled) {
-  background-color: #2563eb;
-}
-
-.qty-box button:disabled {
-  background-color: #d1d5db;
-  cursor: not-allowed;
-}
-
-.qty-box span {
-  padding: 6px 16px;
-  font-weight: bold;
-  color: var(--text);
-  background-color: var(--card-bg);
-  min-width: 30px;
   text-align: center;
+  color: #999;
+}
+
+.cart-img {
+  align-content: center;
+  justify-content: center;
 }

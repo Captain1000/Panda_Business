@@ -9,14 +9,36 @@ export const CartProvider = ({ children }) => {
 
   const addToCart = (tshirt) => {
     setCartItems((prev) => {
-      const exists = prev.find((item) => item.id === tshirt.id);
+      const exists = prev.find(
+        (item) =>
+          item.id === tshirt.id &&
+          item.selectedSize === tshirt.selectedSize &&
+          item.selectedColor === tshirt.selectedColor
+      );
+
       if (exists) {
         return prev.map((item) =>
-          item.id === tshirt.id ? { ...item, quantity: item.quantity + 1 } : item
+          item.id === tshirt.id &&
+          item.selectedSize === tshirt.selectedSize &&
+          item.selectedColor === tshirt.selectedColor
+            ? { ...item, quantity: item.quantity + 10 }
+            : item
         );
       }
-      return [...prev, { ...tshirt, quantity: 1 }];
+
+      // Add new item with minimum quantity 10
+      return [...prev, { ...tshirt, quantity: 10 }];
     });
+  };
+
+  const updateQuantity = (itemId, newQuantity) => {
+    setCartItems((prev) =>
+      prev.map((item) =>
+        item.id === itemId
+          ? { ...item, quantity: Math.max(10, newQuantity) }
+          : item
+      )
+    );
   };
 
   const removeFromCart = (id) =>
@@ -26,7 +48,13 @@ export const CartProvider = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ cartItems, addToCart, removeFromCart, clearCart }}
+      value={{
+        cartItems,
+        addToCart,
+        removeFromCart,
+        clearCart,
+        updateQuantity, // ✅ expose this
+      }}
     >
       {children}
     </CartContext.Provider>

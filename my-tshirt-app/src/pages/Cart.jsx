@@ -96,8 +96,10 @@ const Cart = () => {
       <h2>Your Cart</h2>
       <div className="cart-list">
         {cartItems.map((item) => (
-          <div key={item.id} className="cart-card">
-            <img src={item.image} alt={item.name} />
+          <div key={item.id} className="cart-card fade-slide-in">
+            <div className="cart-img">
+              <img src={item.image} alt={item.name} />
+            </div>
             <div className="cart-info">
               <h4>{item.name}</h4>
 
@@ -106,15 +108,21 @@ const Cart = () => {
                 <span className="badge">Color: {item.selectedColor || "Default"}</span>
                 <div className="qty-control">
                   <label>Qty:</label>
-                  <div className="qty-box">
+                  <div className="qty-buttons">
                     <button
+                      className="qty-btn"
                       onClick={() => updateQuantity(item.id, Math.max(10, item.quantity - 1))}
                       disabled={item.quantity <= 10}
                     >
                       −
                     </button>
-                    <span>{item.quantity}</span>
-                    <button onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
+                    <span className="qty-display pulse">{item.quantity}</span>
+                    <button
+                      className="qty-btn"
+                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                    >
+                      +
+                    </button>
                   </div>
                 </div>
 
