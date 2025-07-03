@@ -93,7 +93,7 @@ const Cart = () => {
 
   return (
     <div className="cart-container">
-      <h2>Your Cart</h2>
+      <h2 className="cart-heading">🛒 Your Cart</h2>
       <div className="cart-list">
         {cartItems.map((item) => (
           <div key={item.id} className="cart-card fade-slide-in">

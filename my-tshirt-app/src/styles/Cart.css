@@ -318,3 +318,52 @@ body.dark-mode {
   align-content: center;
   justify-content: center;
 }
+
+.cart-heading {
+  font-size: 2.5rem;
+  text-align: center;
+  font-weight: 800;
+  background: linear-gradient(90deg, #3b82f6, #06b6d4, #3b82f6);
+  background-size: 200% auto;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: shimmer 5s linear infinite, pulseBounce 2.5s ease-in-out infinite;
+  letter-spacing: 1px;
+  margin-bottom: 2rem;
+  position: relative;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+/* Add some glow in dark mode */
+body.dark-mode .cart-heading {
+  mix-blend-mode: normal;
+  text-shadow: 0 0 8px #3b82f6, 0 0 20px #06b6d4;
+}
+
+/* Pulse + Bounce Animation */
+@keyframes pulseBounce {
+  0% {
+    transform: scale(1) translateY(0);
+  }
+  30% {
+    transform: scale(1.03) translateY(-2px);
+  }
+  60% {
+    transform: scale(0.98) translateY(1px);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Optional shimmer (can keep or remove) */
+@keyframes shimmer {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
