@@ -90,7 +90,6 @@ def get_my_orders(db: Session = Depends(get_db), user=Depends(get_current_user))
                     item_info["price"] = tshirt.price
                     item_info["subtotal"] = tshirt.price * item.quantity
                     total_price += item_info["subtotal"]
-
             elif item.item_type == "custom":
                 custom = db.query(custom_model.CustomDesign).filter_by(id=item.item_id).first()
                 if custom:

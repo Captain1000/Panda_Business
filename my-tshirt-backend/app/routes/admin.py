@@ -35,11 +35,14 @@ def get_all_orders(db: Session = Depends(get_db), admin=Depends(get_current_admi
         address = AddressOut.from_orm(order.address)
 
         item_objs = []
+        total_price = 0.0
         for item in order.items:
             item_info = {
                 "item_type": item.item_type,
                 "item_id": item.item_id,
                 "quantity": item.quantity,
+                "price": 0.0,
+                "subtotal": 0.0
             }
 
             if item.item_type == "tshirt":
@@ -47,6 +50,9 @@ def get_all_orders(db: Session = Depends(get_db), admin=Depends(get_current_admi
                 if tshirt:
                     item_info["name"] = tshirt.name
                     item_info["image"] = tshirt.image
+                    item_info["price"] = tshirt.price
+                    item_info["subtotal"] = tshirt.price * item.quantity
+                    total_price += item_info["subtotal"]
 
             elif item.item_type == "custom":
                 custom = db.query(custom_model.CustomDesign).filter_by(id=item.item_id).first()
@@ -61,7 +67,8 @@ def get_all_orders(db: Session = Depends(get_db), admin=Depends(get_current_admi
             address=address,
             order_date=order.order_date,
             status=order.status,
-            items=item_objs
+            items=item_objs,
+            total_price=total_price
         ))
 
     return result

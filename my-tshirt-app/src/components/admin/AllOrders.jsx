@@ -33,42 +33,51 @@ const AllOrders = () => {
         <p className="admin-no-orders">No orders found.</p>
       ) : (
         <div className="admin-order-list">
-          {orders.map((order) => (
-            <div key={order.id} className="admin-order-card">
-              <div className="admin-order-header">
-                <span><strong>Order ID:</strong> {order.id}</span>
-                <span><strong>Status:</strong> {order.status}</span>
-                <span><strong>Placed:</strong> {new Date(order.order_date).toLocaleString()}</span>
-              </div>
+          {orders.map((order) => {
+            const totalPrice = order.items.reduce((acc, item) => acc + (item.price || 0) * item.quantity, 0);
+            return (
+              <div key={order.id} className="admin-order-card">
+                <div className="admin-order-header">
+                  <span><strong>Order ID:</strong> {order.id}</span>
+                  <span><strong>Status:</strong> {order.status}</span>
+                  <span><strong>Placed:</strong> {new Date(order.order_date).toLocaleString()}</span>
+                </div>
 
-              <div className="admin-address">
-                <strong>Shipping Address:</strong>
-                <p>{order.address.full_name}</p>
-                <p>{order.address.street}, {order.address.city}, {order.address.state} - {order.address.pincode}</p>
-                <p>📞 {order.address.phone}</p>
-              </div>
+                {order.user && (
+                  <p><strong>User:</strong> {order.user.name || order.user.email}</p>
+                )}
 
-              <div className="admin-items">
-                <strong>Items:</strong>
-                <ul>
-                  {order.items.map((item, idx) => (
-                    <li key={idx} className="admin-item">
-                      {item.image ? (
-                        <img src={item.image} alt={item.name || "Item"} className="admin-item-image" />
-                      ) : (
-                        <div className="admin-placeholder-image">No Image</div>
-                      )}
-                      <div className="admin-item-details">
-                        <p><strong>{item.name || "Unnamed Item"}</strong></p>
-                        <p>{item.item_type.toUpperCase()} ID: {item.item_id}</p>
-                        <p>Qty: {item.quantity}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
+                <div className="admin-address">
+                  <strong>Shipping Address:</strong>
+                  <p>{order.address.full_name}</p>
+                  <p>{order.address.street}, {order.address.city}, {order.address.state} - {order.address.pincode}</p>
+                  <p>📞 {order.address.phone}</p>
+                </div>
+
+                <div className="admin-items">
+                  <strong>Items:</strong>
+                  <ul>
+                    {order.items.map((item, idx) => (
+                      <li key={idx} className="admin-item">
+                        {item.image ? (
+                          <img src={item.image} alt={item.name || "Item"} className="admin-item-image" />
+                        ) : (
+                          <div className="admin-placeholder-image">No Image</div>
+                        )}
+                        <div className="admin-item-details">
+                          <p><strong>{item.name || "Unnamed Item"}</strong></p>
+                          <p>{item.item_type.toUpperCase()} ID: {item.item_id}</p>
+                          <p>Qty: {item.quantity}</p>
+                          {item.price && <p>Price: ₹{item.price}</p>}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="admin-total"><strong>Total Price:</strong> ₹{totalPrice.toFixed(2)}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>
