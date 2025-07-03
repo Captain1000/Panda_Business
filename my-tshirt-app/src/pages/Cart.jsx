@@ -4,7 +4,7 @@ import "../styles/Cart.css";
 import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
-  const { cartItems, removeFromCart, clearCart } = useCart();
+  const { cartItems, removeFromCart, clearCart, updateQuantity } = useCart();
   const [showForm, setShowForm] = useState(false);
   const [address, setAddress] = useState({
     full_name: "",
@@ -35,8 +35,13 @@ const Cart = () => {
       return;
     }
 
+    if (cartItems.some((item) => item.quantity < 10)) {
+      setMessage("❌ Minimum quantity for each T-shirt is 10.");
+      setLoading(false);
+      return;
+    }
+
     try {
-      // Step 1: Create the order in the backend
       const res = await fetch("http://localhost:8000/orders", {
         method: "POST",
         headers: {
@@ -48,6 +53,8 @@ const Cart = () => {
             item_type: "tshirt",
             item_id: item.id,
             quantity: item.quantity,
+            size: item.selectedSize,
+            color: item.selectedColor,
           })),
           address,
         }),
@@ -60,13 +67,12 @@ const Cart = () => {
 
       const orderData = await res.json();
 
-      // Step 2: Redirect to Payment.jsx with order info
       navigate("/payment", {
         state: {
           orderId: orderData.id,
           amount: total,
           name: address.full_name,
-          email: "customer@example.com", // Replace with real user email
+          email: "customer@example.com",
         },
       });
     } catch (err) {
@@ -94,8 +100,27 @@ const Cart = () => {
             <img src={item.image} alt={item.name} />
             <div className="cart-info">
               <h4>{item.name}</h4>
-              <p>Qty: {item.quantity}</p>
-              <p>₹ {item.price * item.quantity}</p>
+
+              <div className="cart-meta">
+                <span className="badge">Size: {item.selectedSize || "Not selected"}</span>
+                <span className="badge">Color: {item.selectedColor || "Default"}</span>
+                <div className="qty-control">
+                  <label>Qty:</label>
+                  <div className="qty-box">
+                    <button
+                      onClick={() => updateQuantity(item.id, Math.max(10, item.quantity - 1))}
+                      disabled={item.quantity <= 10}
+                    >
+                      −
+                    </button>
+                    <span>{item.quantity}</span>
+                    <button onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
+                  </div>
+                </div>
+
+                <span className="badge">₹ {item.price * item.quantity}</span>
+              </div>
+
               <button onClick={() => removeFromCart(item.id)}>Remove</button>
             </div>
           </div>

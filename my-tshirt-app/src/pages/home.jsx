@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import "../styles/home.css";
 import { useCart } from "../context/CartContext";
 
-
 const Home = () => {
   const navigate = useNavigate();
   const observer = useRef();
@@ -12,12 +11,11 @@ const Home = () => {
   const [tshirts, setTshirts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-
   const [page, setPage] = useState(0);
-  const [reset, setReset] = useState(false); // NEW
+  const [reset, setReset] = useState(false);
   const limit = 8;
+
   const { addToCart } = useCart();
-  0
 
   const [searchTerm, setSearchTerm] = useState("");
   const [filters, setFilters] = useState({
@@ -27,13 +25,10 @@ const Home = () => {
     max_price: "",
   });
 
+  const [selectedSizes, setSelectedSizes] = useState({});
+  const [errors, setErrors] = useState({});
 
-  // useEffect(() => {
-  //   console.log("Rendering Home Page");
-  // }, []);
-
-
-  // Debounced search -> update filters
+  // Debounced search
   useEffect(() => {
     const timer = setTimeout(() => {
       setFilters((prev) => ({ ...prev, search: searchTerm }));
@@ -41,15 +36,13 @@ const Home = () => {
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
-  // Reset tshirt list when filters change
   useEffect(() => {
     setTshirts([]);
     setPage(0);
     setHasMore(true);
-    setReset(true); // trigger fresh fetch
+    setReset(true);
   }, [filters]);
 
-  // Main fetch logic
   const fetchTshirts = async (fetchPage) => {
     setLoading(true);
     try {
@@ -65,8 +58,6 @@ const Home = () => {
       });
 
       const newData = response.data;
-
-      // Deduplicate by ID
       const existingIds = new Set(tshirts.map((t) => t.id));
       const uniqueData = newData.filter((t) => !existingIds.has(t.id));
 
@@ -81,7 +72,6 @@ const Home = () => {
     }
   };
 
-  // Initial / reset fetch
   useEffect(() => {
     if (reset) {
       fetchTshirts(0);
@@ -89,7 +79,6 @@ const Home = () => {
     }
   }, [reset]);
 
-  // Infinite scroll observer
   const lastTshirtRef = useCallback(
     (node) => {
       if (loading || !hasMore) return;
@@ -108,11 +97,30 @@ const Home = () => {
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
-    setTshirts([]);
     setFilters((prev) => ({
       ...prev,
       [name]: value,
     }));
+  };
+
+  const handleAddToCart = (tshirt) => {
+    const size = selectedSizes[tshirt.id];
+    if (!size) {
+      setErrors((prev) => ({
+        ...prev,
+        [tshirt.id]: "❗ Please select a size before adding to cart.",
+      }));
+      setTimeout(() => {
+        setErrors((prev) => {
+          const copy = { ...prev };
+          delete copy[tshirt.id];
+          return copy;
+        });
+      }, 3000);
+      return;
+    }
+
+    addToCart({ ...tshirt, selectedSize: size });
   };
 
   return (
@@ -129,10 +137,12 @@ const Home = () => {
 
         <select name="color" value={filters.color} onChange={handleFilterChange}>
           <option value="">All Colors</option>
-          <option value="black">Black</option>
-          <option value="white">White</option>
-          <option value="red">Red</option>
-          <option value="blue">Blue</option>
+          <option value="Black">Black</option>
+          <option value="White">White</option>
+          <option value="Red">Red</option>
+          <option value="Blue">Blue</option>
+          <option value="Yellow">Yellow</option>
+          <option value="Sky">Sky</option>
         </select>
 
         <select name="size" value={filters.size} onChange={handleFilterChange}>
@@ -168,25 +178,39 @@ const Home = () => {
             <p>₹{t.price}</p>
 
             <div className="size-row">
-              <strong>Sizes:</strong> {t.sizes?.join(", ")}
+              <label>Select Size:</label>
+              <div className="size-options">
+                {t.sizes.map((size) => (
+                  <button
+                    key={size}
+                    className={`size-option ${selectedSizes[t.id] === size ? "selected" : ""
+                      }`}
+                    onClick={() =>
+                      setSelectedSizes({ ...selectedSizes, [t.id]: size })
+                    }
+                  >
+                    {size}
+                  </button>
+                ))}
+              </div>
             </div>
+
 
             <div className="color-row">
-              <strong>Colors:</strong>{" "}
-              {t.colors?.map((clr, index) => (
-                <span
-                  key={index}
-                  className="color-box"
-                  style={{ backgroundColor: clr }}
-                  title={clr}
-                ></span>
-              ))}
+              <label>Color:</label>
+              <span
+                className="color-box"
+                style={{ backgroundColor: t.colors?.[0]?.toLowerCase() || "#ccc" }}
+                title={t.colors?.[0]}
+              ></span>
+              <span>{t.colors?.[0]}</span>
             </div>
 
-            {/* <button onClick={() => navigate(`/customize/${t.id}`)}>
-              Customize
-            </button> */}
-            <button onClick={() => addToCart(t)}>Add to Cart</button>
+            {errors[t.id] && (
+              <p style={{ color: "red", fontSize: "13px" }}>{errors[t.id]}</p>
+            )}
+
+            <button onClick={() => handleAddToCart(t)}>Add to Cart</button>
           </div>
         ))}
       </div>

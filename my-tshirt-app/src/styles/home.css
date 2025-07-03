@@ -77,10 +77,46 @@ h2 {
 .tshirt-card p {
   color: #555;
   font-weight: bold;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
+}
+
+.size-row,
+.color-row {
+  margin: 8px 0;
+  font-size: 14px;
+  text-align: left;
+}
+
+.size-row label,
+.color-row strong {
+  display: inline-block;
+  margin-bottom: 4px;
+  font-weight: 500;
+  color: #333;
+}
+
+.size-row select {
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 13px;
+  width: 100%;
+  max-width: 100%;
+  margin-top: 4px;
+}
+
+.color-box {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  margin-left: 6px;
+  vertical-align: middle;
 }
 
 .tshirt-card button {
+  margin-top: 12px;
   padding: 8px 14px;
   background-color: #2d89e6;
   color: white;
@@ -95,27 +131,9 @@ h2 {
   background-color: #1b6cd3;
 }
 
-.size-row {
-  margin: 6px 0;
-  font-size: 14px;
-  color: #444;
-}
-
-.color-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 12px;
-  font-size: 14px;
-  color: #444;
-}
-
-.color-box {
-  display: inline-block;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 1px solid #ccc;
+.tshirt-card button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
 .loading,
@@ -125,3 +143,57 @@ h2 {
   color: #777;
   margin-top: 20px;
 }
+
+.size-options {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.size-option {
+  padding: 6px 12px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.size-option:hover {
+  background-color: #e6f0ff;
+  border-color: #2d89e6;
+  color: #2d89e6;
+}
+
+
+.size-option.selected {
+  background-color: #1b6cd3;
+  color: white;
+  border-color: #1b6cd3;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+  font-weight: bold;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+}
+
+.size-option.selected::after {
+  content: "✓";
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: white;
+  color: #1b6cd3;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #1b6cd3;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
