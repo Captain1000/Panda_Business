@@ -14,8 +14,8 @@ const Cart = () => {
     pincode: "",
     phone: "",
   });
-  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const total = cartItems.reduce(
@@ -23,24 +23,21 @@ const Cart = () => {
     0
   );
 
-  const handleCheckout = async (e) => {
+  const handleContinueToPayment = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage("");
 
     const token = localStorage.getItem("token");
-    console.log(token)
-
-  if (!token) {
-    setMessage("❌ Please login to place an order.");
-    setLoading(false);
-    return;
-  }
+    if (!token) {
+      setMessage("❌ Please login to place an order.");
+      setLoading(false);
+      return;
+    }
 
     try {
-      const token = localStorage.getItem("token");
-
-      const response = await fetch("http://localhost:8000/orders", {
+      // Step 1: Create the order in the backend
+      const res = await fetch("http://localhost:8000/orders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,15 +53,24 @@ const Cart = () => {
         }),
       });
 
-      if (!response.ok) {
-        const err = await response.json();
-        throw new Error(err.detail || "Order failed");
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.detail || "Order creation failed");
       }
 
-      setMessage("✅ Order placed successfully!");
-      clearCart();
-      setTimeout(() => navigate("/my-orders"), 1500);
+      const orderData = await res.json();
+
+      // Step 2: Redirect to Payment.jsx with order info
+      navigate("/payment", {
+        state: {
+          orderId: orderData.id,
+          amount: total,
+          name: address.full_name,
+          email: "customer@example.com", // Replace with real user email
+        },
+      });
     } catch (err) {
+      console.error("❌ Error:", err);
       setMessage("❌ " + err.message);
     } finally {
       setLoading(false);
@@ -109,15 +115,13 @@ const Cart = () => {
       </div>
 
       {showForm && (
-        <form className="checkout-form" onSubmit={handleCheckout}>
+        <form className="checkout-form" onSubmit={handleContinueToPayment}>
           <h3>Shipping Details</h3>
           <input
             type="text"
             placeholder="Full Name"
             value={address.full_name}
-            onChange={(e) =>
-              setAddress({ ...address, full_name: e.target.value })
-            }
+            onChange={(e) => setAddress({ ...address, full_name: e.target.value })}
             required
           />
           <input
@@ -145,9 +149,7 @@ const Cart = () => {
             type="text"
             placeholder="Pincode"
             value={address.pincode}
-            onChange={(e) =>
-              setAddress({ ...address, pincode: e.target.value })
-            }
+            onChange={(e) => setAddress({ ...address, pincode: e.target.value })}
             required
           />
           <input
@@ -158,7 +160,7 @@ const Cart = () => {
             required
           />
           <button type="submit" disabled={loading}>
-            {loading ? "Placing Order..." : "Confirm Order"}
+            {loading ? "Processing..." : "Continue to Payment"}
           </button>
         </form>
       )}

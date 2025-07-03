@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes import auth, tshirt, custom, admin, order, address, user as user_routes
+from app.routes import auth, tshirt, custom, admin, order, address, user as user_routes, payment
 from app.db.session import Base, engine, SessionLocal
 from app.models import tshirt as tshirt_model, custom_design, order as order_model, address as addr_model
 from app.models.user import User
@@ -47,6 +47,7 @@ app.include_router(admin.router, prefix="/admin")
 app.include_router(order.router, tags=["orders"])
 app.include_router(address.router)
 app.include_router(user_routes.router, prefix="/users")
+app.include_router(payment.router)
 
 
 @app.on_event("startup")

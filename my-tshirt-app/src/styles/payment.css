@@ -1,0 +1,24 @@
+.payment-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 2rem;
+  border: 1px solid #ccc;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.payment-summary {
+  margin-bottom: 20px;
+}
+
+.payment-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.payment-message {
+  margin-top: 1rem;
+  font-weight: bold;
+  color: green;
+}

@@ -48,7 +48,7 @@ def place_order(order_data: OrderCreate, db: Session = Depends(get_db), user=Dep
         ))
     db.commit()
 
-    return {"detail": "✅ Order placed successfully"}
+    return {"id": new_order.id, "detail": "✅ Order placed successfully"}
 
 
 # @router.get("/orders/my", response_model=List[OrderOut])

@@ -10,6 +10,7 @@ import MyOrders from "./pages/MyOrders";
 import AdminDashboard from "./pages/AdminDashboard";
 import Cart from "./pages/Cart";
 import Layout from "./components/Layout";
+import Payment from "./pages/Payment";
 
 const isAuthenticated = () => !!localStorage.getItem("token");
 
@@ -31,6 +32,7 @@ function App() {
           <Route path="/my-orders" element={isAuthenticated() ? <MyOrders /> : <Navigate to="/login" />} />
           <Route path="/cart" element={isAuthenticated() ? <Cart /> : <Navigate to="/login" />} />
           <Route path="/admin" element={isAuthenticated() ? <AdminDashboard /> : <Navigate to="/login" />} />
+          <Route path="/payment" element={isAuthenticated() ? <Payment /> : <Navigate to="/login" />} />
         </Route>
       </Routes>
     </Router>
