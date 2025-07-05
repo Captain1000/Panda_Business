@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useCart } from "../context/CartContext";
 import "../styles/Cart.css";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 const Cart = () => {
   const { cartItems, removeFromCart, clearCart, updateQuantity } = useCart();
   const [showForm, setShowForm] = useState(false);
+  const [savedAddresses, setSavedAddresses] = useState([]);
+  const [selectedAddress, setSelectedAddress] = useState("");
   const [address, setAddress] = useState({
     full_name: "",
     street: "",
@@ -22,6 +24,18 @@ const Cart = () => {
     (sum, item) => sum + item.price * item.quantity,
     0
   );
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    fetch("http://localhost:8000/address", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => res.json())
+      .then((data) => setSavedAddresses(data))
+      .catch((err) => console.error("Failed to fetch addresses", err));
+  }, []);
 
   const handleContinueToPayment = async (e) => {
     e.preventDefault();
@@ -41,6 +55,17 @@ const Cart = () => {
       return;
     }
 
+    const finalAddress =
+      selectedAddress === "new"
+        ? address
+        : savedAddresses.find((a) => a.id === parseInt(selectedAddress));
+
+    if (!finalAddress) {
+      setMessage("❌ Please select or enter an address.");
+      setLoading(false);
+      return;
+    }
+
     try {
       const res = await fetch("http://localhost:8000/orders", {
         method: "POST",
@@ -56,7 +81,7 @@ const Cart = () => {
             size: item.selectedSize,
             color: item.selectedColor,
           })),
-          address,
+          address: finalAddress,
         }),
       });
 
@@ -71,7 +96,7 @@ const Cart = () => {
         state: {
           orderId: orderData.id,
           amount: total,
-          name: address.full_name,
+          name: finalAddress.full_name,
           email: "customer@example.com",
         },
       });
@@ -148,54 +173,79 @@ const Cart = () => {
       </div>
 
       {showForm && (
-        <form className="checkout-form" onSubmit={handleContinueToPayment}>
+        <div className="checkout-form">
           <h3>Shipping Details</h3>
-          <input
-            type="text"
-            placeholder="Full Name"
-            value={address.full_name}
-            onChange={(e) => setAddress({ ...address, full_name: e.target.value })}
+
+          <select
+            value={selectedAddress}
+            onChange={(e) => setSelectedAddress(e.target.value)}
             required
-          />
-          <input
-            type="text"
-            placeholder="Street"
-            value={address.street}
-            onChange={(e) => setAddress({ ...address, street: e.target.value })}
-            required
-          />
-          <input
-            type="text"
-            placeholder="City"
-            value={address.city}
-            onChange={(e) => setAddress({ ...address, city: e.target.value })}
-            required
-          />
-          <input
-            type="text"
-            placeholder="State"
-            value={address.state}
-            onChange={(e) => setAddress({ ...address, state: e.target.value })}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Pincode"
-            value={address.pincode}
-            onChange={(e) => setAddress({ ...address, pincode: e.target.value })}
-            required
-          />
-          <input
-            type="tel"
-            placeholder="Phone"
-            value={address.phone}
-            onChange={(e) => setAddress({ ...address, phone: e.target.value })}
-            required
-          />
-          <button type="submit" disabled={loading}>
-            {loading ? "Processing..." : "Continue to Payment"}
-          </button>
-        </form>
+          >
+            <option value="">-- Select Address --</option>
+            {savedAddresses.map((addr) => (
+              <option key={addr.id} value={addr.id}>
+                {addr.full_name}, {addr.street}, {addr.city}
+              </option>
+            ))}
+            <option value="new">➕ New Address</option>
+          </select>
+
+          {selectedAddress === "new" && (
+            <form onSubmit={handleContinueToPayment}>
+              <input
+                type="text"
+                placeholder="Full Name"
+                value={address.full_name}
+                onChange={(e) => setAddress({ ...address, full_name: e.target.value })}
+                required
+              />
+              <input
+                type="text"
+                placeholder="Street"
+                value={address.street}
+                onChange={(e) => setAddress({ ...address, street: e.target.value })}
+                required
+              />
+              <input
+                type="text"
+                placeholder="City"
+                value={address.city}
+                onChange={(e) => setAddress({ ...address, city: e.target.value })}
+                required
+              />
+              <input
+                type="text"
+                placeholder="State"
+                value={address.state}
+                onChange={(e) => setAddress({ ...address, state: e.target.value })}
+                required
+              />
+              <input
+                type="text"
+                placeholder="Pincode"
+                value={address.pincode}
+                onChange={(e) => setAddress({ ...address, pincode: e.target.value })}
+                required
+              />
+              <input
+                type="tel"
+                placeholder="Phone"
+                value={address.phone}
+                onChange={(e) => setAddress({ ...address, phone: e.target.value })}
+                required
+              />
+              <button type="submit" disabled={loading}>
+                {loading ? "Processing..." : "Continue to Payment"}
+              </button>
+            </form>
+          )}
+
+          {selectedAddress !== "new" && (
+            <button onClick={handleContinueToPayment} disabled={loading}>
+              {loading ? "Processing..." : "Continue to Payment"}
+            </button>
+          )}
+        </div>
       )}
 
       {message && <p className="status-message">{message}</p>}

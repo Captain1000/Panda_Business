@@ -74,8 +74,9 @@ export default function Navbar() {
 
         {user ? (
           <>
-            <Link to="/my-orders"><FaUser /> Orders</Link>
-            <Link to="/my-customizations"><FaTshirt /> Custom</Link>
+            <Link to="/profile"><FaUser /> Profile</Link>
+            <Link to="/my-orders"><FaTshirt /> Orders</Link>
+            {/* <Link to="/my-customizations"><FaTshirt /> Custom</Link> */}
             {user.role === "admin" && <Link to="/admin">Admin</Link>}
             <button onClick={handleLogout}><FaSignOutAlt /> Logout</button>
           </>

@@ -16,3 +16,4 @@ class AddressOut(AddressBase):
     user_id: int
     class Config:
         orm_mode = True
+

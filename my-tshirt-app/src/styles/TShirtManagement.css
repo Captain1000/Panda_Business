@@ -1,67 +1,123 @@
+:root {
+  --primary: #1976d2;
+  --primary-dark: #155db1;
+  --danger: #d32f2f;
+  --danger-dark: #b71c1c;
+  --neutral: #6b7280;
+  --neutral-dark: #4b5563;
+  --text: #1f2937;
+  --text-light: #f9fafb;
+  --card-bg: #ffffff;
+  --card-bg-dark: #1f2937;
+  --input-bg: #ffffff;
+  --input-bg-dark: #374151;
+}
+
+body.dark-mode {
+  --text: var(--text-light);
+  --card-bg: var(--card-bg-dark);
+  --input-bg: var(--input-bg-dark);
+}
+
+/* Container */
 .tshirt-mgmt-container {
   padding: 2rem;
   max-width: 1100px;
   margin: auto;
-  color: var(--text, #222);
+  color: var(--text);
+  transition: color 0.3s, background-color 0.3s;
 }
 
+/* Form */
 .tshirt-form {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
   margin-bottom: 2rem;
+  background: var(--card-bg);
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: background 0.3s ease;
 }
 
 .tshirt-form input {
   padding: 0.6rem;
   border-radius: 6px;
   border: 1px solid #ccc;
+  background-color: var(--input-bg);
   font-size: 0.95rem;
+  transition: border-color 0.2s;
+}
+
+.tshirt-form input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.tshirt-form .form-buttons {
+  display: flex;
+  gap: 0.6rem;
+  grid-column: span 2;
 }
 
 .tshirt-form button {
-  padding: 0.75rem;
-  background: #1976d2;
+  padding: 0.75rem 1.2rem;
+  background: var(--primary);
   color: white;
   border: none;
   border-radius: 6px;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .tshirt-form button:hover {
-  background: #155db1;
+  background: var(--primary-dark);
+  transform: translateY(-1px);
 }
 
+/* Cancel Button */
+.cancel-btn {
+  background: var(--neutral);
+  color: white;
+}
+
+.cancel-btn:hover {
+  background: var(--neutral-dark);
+}
+
+/* Grid layout */
 .tshirt-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1.5rem;
 }
 
+/* T-Shirt Card */
 .tshirt-card {
-  background: var(--card-bg, #fff);
+  background: var(--card-bg);
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   padding: 1rem;
   text-align: center;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, background-color 0.3s;
 }
 
 .tshirt-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
 }
 
 .tshirt-card img {
   width: 100%;
   height: 180px;
-  object-fit: contain;  /* Keeps full image visible */
+  object-fit: contain;
   margin-bottom: 0.5rem;
   border-radius: 6px;
   background: #f9f9f9;
 }
 
+/* Color & Size Chips */
 .chip-group {
   margin: 0.4rem 0;
   display: flex;
@@ -84,18 +140,40 @@
   font-size: 12px;
 }
 
-.delete-btn {
-  margin-top: 0.7rem;
+/* Actions */
+.card-actions {
+  margin-top: 0.6rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.delete-btn,
+.edit-btn {
   padding: 6px 12px;
-  background: #d32f2f;
-  color: white;
-  border: none;
-  border-radius: 4px;
   font-size: 0.9rem;
+  border: none;
+  border-radius: 6px;
+  color: white;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.delete-btn {
+  background: var(--danger);
 }
 
 .delete-btn:hover {
-  background: #b71c1c;
+  background: var(--danger-dark);
+  transform: scale(1.05);
+}
+
+.edit-btn {
+  background: var(--primary);
+}
+
+.edit-btn:hover {
+  background: var(--primary-dark);
+  transform: scale(1.05);
 }

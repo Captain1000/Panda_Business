@@ -1,0 +1,93 @@
+.personal-info-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 2rem;
+  font-family: "Segoe UI", sans-serif;
+  color: var(--text, #222);
+}
+
+.personal-info-container h2,
+.personal-info-container h3 {
+  color: var(--primary, #1976d2);
+  margin-bottom: 1rem;
+  text-shadow: 1px 1px 1px #ccc;
+}
+
+.address-card {
+  background: var(--card-bg, #f9f9f9);
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  transition: box-shadow 0.3s ease;
+}
+
+.address-card:hover {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.edit-form input,
+.add-form input {
+  display: block;
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 0.6rem;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: border 0.2s ease;
+}
+
+.edit-form input:focus,
+.add-form input:focus {
+  border-color: #1976d2;
+  outline: none;
+}
+
+.action-btns button,
+.edit-form button,
+.add-form button {
+  margin-right: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.action-btns button:hover,
+.edit-form button:hover,
+.add-form button:hover {
+  transform: translateY(-1px);
+}
+
+.action-btns button:first-child,
+.edit-form button:first-child {
+  background: #ff9800;
+  color: white;
+}
+
+.action-btns button:last-child,
+.edit-form button:last-child {
+  background: #e53935;
+  color: white;
+}
+
+.add-form button {
+  background: #43a047;
+  color: white;
+}
+
+@media (max-width: 600px) {
+  .edit-form input,
+  .add-form input {
+    font-size: 0.85rem;
+  }
+
+  .action-btns button,
+  .edit-form button,
+  .add-form button {
+    font-size: 0.8rem;
+  }
+}

@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from app.db.session import Base
 
+
 class Address(Base):
     __tablename__ = "addresses"
     id = Column(Integer, primary_key=True, index=True)

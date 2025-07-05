@@ -11,6 +11,7 @@ const TShirtManagement = () => {
     colors: "",
     sizes: "",
   });
+  const [editId, setEditId] = useState(null); // for edit mode
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -38,15 +39,40 @@ const TShirtManagement = () => {
     };
 
     try {
-      await axios.post("http://localhost:8000/tshirts", payload, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      if (editId) {
+        // Update mode
+        await axios.put(`http://localhost:8000/tshirts/${editId}`, payload, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+      } else {
+        // Add mode
+        await axios.post("http://localhost:8000/tshirts", payload, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+      }
 
       setForm({ name: "", image: "", price: "", colors: "", sizes: "" });
+      setEditId(null);
       fetchTshirts();
     } catch (err) {
-      alert("Error adding T-shirt");
+      alert("Error saving T-shirt");
     }
+  };
+
+  const handleEdit = (tshirt) => {
+    setForm({
+      name: tshirt.name,
+      image: tshirt.image,
+      price: tshirt.price,
+      colors: tshirt.colors.join(", "),
+      sizes: tshirt.sizes.join(", "),
+    });
+    setEditId(tshirt.id);
+  };
+
+  const handleCancelEdit = () => {
+    setForm({ name: "", image: "", price: "", colors: "", sizes: "" });
+    setEditId(null);
   };
 
   const handleDelete = async (id) => {
@@ -97,7 +123,17 @@ const TShirtManagement = () => {
           value={form.sizes}
           onChange={(e) => setForm({ ...form, sizes: e.target.value })}
         />
-        <button type="submit">➕ Add T-Shirt</button>
+
+        <div className="form-buttons">
+          <button type="submit">
+            {editId ? "✏️ Update T-Shirt" : "➕ Add T-Shirt"}
+          </button>
+          {editId && (
+            <button type="button" className="cancel-btn" onClick={handleCancelEdit}>
+              ❌ Cancel
+            </button>
+          )}
+        </div>
       </form>
 
       <div className="tshirt-grid">
@@ -124,9 +160,14 @@ const TShirtManagement = () => {
                 </span>
               ))}
             </div>
-            <button className="delete-btn" onClick={() => handleDelete(t.id)}>
-              🗑 Delete
-            </button>
+            <div className="card-actions">
+              <button className="edit-btn" onClick={() => handleEdit(t)}>
+                ✏️ Edit
+              </button>
+              <button className="delete-btn" onClick={() => handleDelete(t.id)}>
+                🗑 Delete
+              </button>
+            </div>
           </div>
         ))}
       </div>

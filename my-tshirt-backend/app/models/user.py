@@ -1,5 +1,7 @@
-from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from app.db.session import Base
+from app.models.address import Address
 
 class User(Base):
     __tablename__ = "users"
@@ -10,3 +12,4 @@ class User(Base):
     role = Column(String, default="user")
     dark_mode = Column(Boolean, default=False)
 
+    addresses = relationship("Address", backref="user")  # ✅ Add this line
