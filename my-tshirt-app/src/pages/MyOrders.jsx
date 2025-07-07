@@ -45,12 +45,14 @@ export default function MyOrders() {
                 </span>
               </div>
 
-              <div className="order-address">
-                <h4>Shipping Address</h4>
-                <p>{order.address.full_name}</p>
-                <p>{order.address.street}, {order.address.city}, {order.address.state} - {order.address.pincode}</p>
-                <p>📞 {order.address.phone}</p>
-              </div>
+              {order.address && (
+                <div className="order-address">
+                  <h4>Shipping Address</h4>
+                  <p>{order.address.full_name}</p>
+                  <p>{order.address.street}, {order.address.city}, {order.address.state} - {order.address.pincode}</p>
+                  <p>📞 {order.address.phone}</p>
+                </div>
+              )}
 
               <div className="order-items">
                 <h4>Items</h4>
