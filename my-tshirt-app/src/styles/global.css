@@ -1,9 +1,11 @@
 body {
   margin: 0;
     font-family: sans-serif;
-    background-color: #e3d9d9;
+    /* background-color: #e6e0e0; */
+    /* background-color: #e3d9d9; */
   /* padding: 2rem; */
   /* background: url('/images/background_image.png') no-repeat center center fixed; */
+  background: url('https://www.imageshine.in/uploads/gallery/Blur-and-sky-blue-abstract-background-photo.png') no-repeat center center fixed;
   background-size: cover;
   color: var(--text);
   min-height: 100vh;

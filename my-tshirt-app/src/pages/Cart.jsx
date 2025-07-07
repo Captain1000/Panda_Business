@@ -184,7 +184,7 @@ const Cart = () => {
             <option value="">-- Select Address --</option>
             {savedAddresses.map((addr) => (
               <option key={addr.id} value={addr.id}>
-                {addr.full_name}, {addr.street}, {addr.city}
+                {addr.full_name}, {addr.street}, {addr.city}, {addr.phone}
               </option>
             ))}
             <option value="new">➕ New Address</option>

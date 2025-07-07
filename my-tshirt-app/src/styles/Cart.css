@@ -2,11 +2,11 @@
   --primary: #3b82f6;
   --danger: #ef4444;
   --success: #10b981;
-  --light-bg: #f9fafb;
+  /* --light-bg: #f9fafb; */
   --dark-bg: #1f2937;
   --text: #111827;
   --text-light: #f9fafb;
-  --card-bg: #ffffff;
+  /* --card-bg: #ffffff; */
   --card-bg-dark: #374151;
   --badge-bg: #e5e7eb;
   --badge-bg-dark: #4b5563;
@@ -31,7 +31,7 @@ body.dark-mode {
   color: var(--text);
   min-height: 100vh;
   transition: background-color 0.3s ease, color 0.3s ease;
-}
+} 
 
 .cart-container h2 {
   font-size: 2rem;
@@ -46,13 +46,25 @@ body.dark-mode {
   gap: 1.2rem;
 }
 
-.cart-card {
+/* .cart-card {
   display: flex;
   background: var(--card-bg);
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease;
+} */
+
+.cart-card {
+  display: flex;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0px 0px 30px rgba(227, 228, 237, 0.37);
+  border-radius: 16px;
+  padding: 1.2rem;
+  transition: all 0.3s ease;
 }
 
 .cart-card:hover {
