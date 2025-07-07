@@ -32,7 +32,7 @@ def get_all_orders(db: Session = Depends(get_db), admin=Depends(get_current_admi
     result = []
 
     for order in orders:
-        address = AddressOut.from_orm(order.address)
+        address = AddressOut.from_orm(order.address) if order.address else None
 
         item_objs = []
         total_price = 0.0

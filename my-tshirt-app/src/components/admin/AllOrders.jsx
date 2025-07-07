@@ -47,12 +47,20 @@ const AllOrders = () => {
                   <p><strong>User:</strong> {order.user.name || order.user.email}</p>
                 )}
 
-                <div className="admin-address">
-                  <strong>Shipping Address:</strong>
-                  <p>{order.address.full_name}</p>
-                  <p>{order.address.street}, {order.address.city}, {order.address.state} - {order.address.pincode}</p>
-                  <p>📞 {order.address.phone}</p>
-                </div>
+                {order.address ? (
+                  <div className="admin-address">
+                    <strong>Shipping Address:</strong>
+                    <p>{order.address.full_name}</p>
+                    <p>{order.address.street}, {order.address.city}, {order.address.state} - {order.address.pincode}</p>
+                    <p>📞 {order.address.phone}</p>
+                  </div>
+                ) : (
+                  <div className="admin-address">
+                    <strong>Shipping Address:</strong>
+                    <p>Not provided</p>
+                  </div>
+                )}
+
 
                 <div className="admin-items">
                   <strong>Items:</strong>

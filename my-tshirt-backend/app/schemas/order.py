@@ -49,7 +49,7 @@ class OrderItemOut(BaseModel):
 
 class OrderOut(BaseModel):
     id: int
-    address: AddressOut
+    address: Optional[AddressOut]
     order_date: datetime
     status: str
     items: List[OrderItemOut]
