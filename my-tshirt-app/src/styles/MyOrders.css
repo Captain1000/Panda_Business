@@ -1,15 +1,35 @@
+:root {
+  --bg: #e3d9d9;
+  --card-bg: rgba(255, 255, 255, 0.25);
+  --border: rgba(255, 255, 255, 0.18);
+  --text: #222;
+  --text-muted: #555;
+}
+
+body.dark-mode {
+  --bg: #1e1e2f;
+  --card-bg: rgba(40, 40, 60, 0.4);
+  --border: rgba(255, 255, 255, 0.1);
+  --text: #eee;
+  --text-muted: #aaa;
+}
+
+
+
 .orders-container {
   max-width: 900px;
   margin: 40px auto;
   padding: 20px;
   font-family: 'Segoe UI', sans-serif;
-  background-color: #fdfdfd;
+  color: var(--text);
+  background-color: transparent;
 }
 
 .orders-title {
   text-align: center;
   font-size: 28px;
   margin-bottom: 30px;
+  color: var(--text);
 }
 
 .error-message {
@@ -30,13 +50,15 @@
 }
 
 .order-card {
-  border: 1px solid #ccc;
-  padding: 20px;
-  border-radius: 12px;
-  background-color: #fff;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0px 0px 30px rgba(227, 228, 237, 0.37);
+  border-radius: 16px;
+  padding: 1.2rem;
+  transition: all 0.3s ease;
 }
-
 .order-header {
   display: flex;
   justify-content: space-between;
@@ -50,8 +72,7 @@
 }
 
 .order-date {
-  color: #666;
-  font-size: 14px;
+  color: var(--text-muted);
 }
 
 .order-address, .order-items {
@@ -60,8 +81,7 @@
 
 .order-address h4,
 .order-items h4 {
-  margin-bottom: 8px;
-  color: #333;
+  color: var(--text);
 }
 
 .order-item {
@@ -110,5 +130,10 @@
   font-size: 18px;
   text-align: right;
   font-weight: bold;
-  color: #222;
+   color: var(--text);
+}
+
+.order-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }

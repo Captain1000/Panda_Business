@@ -1,18 +1,46 @@
+:root {
+  --bg: #ffffff;
+  --card-bg: rgba(255, 255, 255, 0.25);
+  --text: #222;
+  --text-muted: #555;
+  --border: #ccc;
+  --primary: #2d89e6;
+  --primary-hover: #1b6cd3;
+}
+
+body.dark-mode {
+  --bg: #1e1e2f;
+  --card-bg: rgba(40, 40, 60, 0.4);
+  --text: #f0f0f0;
+  --text-muted: #ccc;
+  --border: #444;
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Container */
 .home-container {
   max-width: 1200px;
   margin: auto;
   padding: 30px 20px;
-  font-family: "Segoe UI", sans-serif;
-  color: #222;
 }
 
+/* Title */
 h2 {
   text-align: center;
   margin-bottom: 24px;
   font-size: 30px;
-  color: #333;
+  color: var(--text);
 }
 
+/* Filters */
 .filters {
   display: flex;
   flex-wrap: wrap;
@@ -24,39 +52,31 @@ h2 {
 .filters input,
 .filters select {
   padding: 10px 12px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border);
   border-radius: 6px;
   font-size: 14px;
   min-width: 160px;
   transition: all 0.2s ease;
+  background-color: var(--card-bg);
+  color: var(--text);
 }
 
 .filters input:focus,
 .filters select:focus {
-  border-color: #2d89e6;
+  border-color: var(--primary);
   outline: none;
 }
 
+/* Grid */
 .tshirt-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 20px;
 }
 
-/* .tshirt-card {
-  background: white;
-  border: 1px solid #eee;
-  border-radius: 12px;
-  padding: 16px;
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-} */
-
+/* T-shirt Card */
 .tshirt-card {
-  background: rgba(255, 255, 255, 0.25);
+  background: var(--card-bg);
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
   border: 2px solid rgba(255, 255, 255, 0.18);
@@ -66,34 +86,37 @@ h2 {
   transition: all 0.3s ease;
 }
 
-
-
-
 .tshirt-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
 }
 
-.tshirt-card img {
+
+ .tshirt-card img {
   width: 100%;
   height: 200px;
+  /* object-fit: contain; */
   object-fit: cover;
+  background: linear-gradient(145deg, #e0e0e0, #f8f8f8); /* or var(--card-bg) */
   border-radius: 10px;
   margin-bottom: 12px;
 }
 
+
+
 .tshirt-card h3 {
   font-size: 18px;
   margin: 8px 0;
-  color: #222;
+  color: var(--text);
 }
 
 .tshirt-card p {
-  color: #555;
+  color: var(--text-muted);
   font-weight: bold;
   margin-bottom: 8px;
 }
 
+/* Size & Color Rows */
 .size-row,
 .color-row {
   margin: 8px 0;
@@ -106,33 +129,36 @@ h2 {
   display: inline-block;
   margin-bottom: 4px;
   font-weight: 500;
-  color: #333;
+  color: var(--text);
 }
 
 .size-row select {
   padding: 6px 8px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border);
   border-radius: 5px;
   font-size: 13px;
   width: 100%;
-  max-width: 100%;
   margin-top: 4px;
+  background-color: var(--card-bg);
+  color: var(--text);
 }
 
+/* Color Dot */
 .color-box {
   display: inline-block;
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border);
   margin-left: 6px;
   vertical-align: middle;
 }
 
+/* Button */
 .tshirt-card button {
   margin-top: 12px;
   padding: 8px 14px;
-  background-color: #2d89e6;
+  background-color: var(--primary);
   color: white;
   border: none;
   border-radius: 6px;
@@ -142,7 +168,7 @@ h2 {
 }
 
 .tshirt-card button:hover {
-  background-color: #1b6cd3;
+  background-color: var(--primary-hover);
 }
 
 .tshirt-card button:disabled {
@@ -150,14 +176,16 @@ h2 {
   cursor: not-allowed;
 }
 
+/* States */
 .loading,
 .no-results {
   text-align: center;
   font-size: 16px;
-  color: #777;
+  color: var(--text-muted);
   margin-top: 20px;
 }
 
+/* Size Options */
 .size-options {
   display: flex;
   gap: 8px;
@@ -167,24 +195,24 @@ h2 {
 .size-option {
   padding: 6px 12px;
   font-size: 13px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border);
   border-radius: 6px;
-  background-color: white;
+  background-color: var(--card-bg);
+  color: var(--text);
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
 
 .size-option:hover {
-  background-color: #e6f0ff;
-  border-color: #2d89e6;
-  color: #2d89e6;
+  background-color: rgba(45, 137, 230, 0.1);
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
-
 .size-option.selected {
-  background-color: #1b6cd3;
+  background-color: var(--primary-hover);
   color: white;
-  border-color: #1b6cd3;
+  border-color: var(--primary-hover);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
   transform: scale(1.05);
   font-weight: bold;
@@ -198,7 +226,7 @@ h2 {
   top: -8px;
   right: -8px;
   background-color: white;
-  color: #1b6cd3;
+  color: var(--primary-hover);
   font-size: 12px;
   font-weight: bold;
   border-radius: 50%;
@@ -207,7 +235,6 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid #1b6cd3;
+  border: 2px solid var(--primary-hover);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
-

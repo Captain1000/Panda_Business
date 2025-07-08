@@ -152,7 +152,7 @@ body.dark-mode {
 
 .qty-display {
   padding: 0.3rem 0.8rem;
-  background-color: white;
+  /* background-color: white; */
   font-weight: 600;
   font-size: 1rem;
   border-left: 1px solid #ccc;
@@ -395,3 +395,8 @@ body.dark-mode .cart-heading {
   box-shadow: 0 0 5px rgba(59, 130, 246, 0.3);
   transform: scale(1.02);
 }
+
+/* .qty-display pulse {
+  color: var(--primary);
+  background-color: var(--primary);
+} */
