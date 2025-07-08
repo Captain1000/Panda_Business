@@ -7,7 +7,7 @@
 .admin-orders-title {
   font-size: 28px;
   margin-bottom: 20px;
-  color: #333;
+  color: var(--text);
 }
 
 .admin-error {
@@ -26,11 +26,14 @@
 }
 
 .admin-order-card {
-  border: 1px solid #ddd;
-  padding: 16px;
-  border-radius: 10px;
-  background: #fafafa;
-  transition: box-shadow 0.3s ease;
+  /* background: var(--card-bg); */
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0px 0px 30px rgba(227, 228, 237, 0.37);
+  border-radius: 16px;
+  padding: 1.2rem;
+  transition: all 0.3s ease;
 }
 
 .admin-order-card:hover {

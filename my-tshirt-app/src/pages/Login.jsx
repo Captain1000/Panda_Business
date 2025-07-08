@@ -55,6 +55,7 @@ const Login = () => {
         }
 
         // Redirect based on toggle
+        console.log(isAdmin)
         navigate(isAdmin ? "/admin" : "/");
       } else {
         setError("Failed to fetch user profile");
