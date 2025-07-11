@@ -12,6 +12,9 @@ import Cart from "./pages/Cart";
 import Layout from "./components/Layout";
 import Payment from "./pages/Payment";
 import PersonalInfo from "./pages/PersonalInfo";
+// import ForgotPassword from "./pages/ForgotPassword";
+import ForgotPassword from "./pages/ForGotPassword";
+
 
 const isAuthenticated = () => !!localStorage.getItem("token");
 
@@ -22,6 +25,8 @@ function App() {
         {/* Auth Routes (no layout) */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/admin" element={isAuthenticated() ? <AdminDashboard /> : <Navigate to="/login" />} />
 
         {/* All Protected Routes with Layout */}
         <Route element={<Layout />}>
@@ -32,7 +37,6 @@ function App() {
           <Route path="/place-order/:id" element={isAuthenticated() ? <PlaceOrder /> : <Navigate to="/login" />} />
           <Route path="/my-orders" element={isAuthenticated() ? <MyOrders /> : <Navigate to="/login" />} />
           <Route path="/cart" element={isAuthenticated() ? <Cart /> : <Navigate to="/login" />} />
-          <Route path="/admin" element={isAuthenticated() ? <AdminDashboard /> : <Navigate to="/login" />} />
           <Route path="/payment" element={isAuthenticated() ? <Payment /> : <Navigate to="/login" />} />
           <Route path="/profile" element={isAuthenticated() ? <PersonalInfo /> : <Navigate to="/login" />} />
         </Route>

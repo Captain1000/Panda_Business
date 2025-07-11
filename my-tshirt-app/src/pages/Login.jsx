@@ -33,9 +33,7 @@ const Login = () => {
 
       const data = await response.json();
       localStorage.setItem("token", data.access_token);
-      // console.log("token", data.access_token);
 
-      // Fetch user profile to get dark mode preference
       const profileRes = await fetch("http://localhost:8000/users/me", {
         headers: {
           Authorization: `Bearer ${data.access_token}`,
@@ -44,18 +42,14 @@ const Login = () => {
 
       if (profileRes.ok) {
         const profile = await profileRes.json();
-        // Store profile if needed elsewhere
         localStorage.setItem("user", JSON.stringify(profile));
 
-        // Apply dark mode from DB
         if (profile.dark_mode) {
           document.body.classList.add("dark-mode");
         } else {
           document.body.classList.remove("dark-mode");
         }
 
-        // Redirect based on toggle
-        console.log(isAdmin)
         navigate(isAdmin ? "/admin" : "/");
       } else {
         setError("Failed to fetch user profile");
@@ -86,14 +80,23 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <label className="admin-checkbox">
-          <input
-            type="checkbox"
-            checked={isAdmin}
-            onChange={(e) => setIsAdmin(e.target.checked)}
-          />
-          Login as Admin
-        </label>
+        <div className="login-dev">
+
+          <label className="admin-checkbox">
+            <input
+              type="checkbox"
+              checked={isAdmin}
+              onChange={(e) => setIsAdmin(e.target.checked)}
+            />
+            Login as Admin
+          </label>
+          
+          <div className="forgot-password">
+            <a href="/forgot-password">Forgot Password?</a>
+          </div>
+
+
+        </div>
 
         <button type="submit">Login</button>
       </form>

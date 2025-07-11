@@ -72,7 +72,8 @@ body.dark-mode {
 }
 
 .order-date {
-  color: var(--text-muted);
+  /* color: var(--text-muted); */
+  color: whitesmoke;
 }
 
 .order-address, .order-items {
