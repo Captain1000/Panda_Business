@@ -14,6 +14,7 @@ import Payment from "./pages/Payment";
 import PersonalInfo from "./pages/PersonalInfo";
 // import ForgotPassword from "./pages/ForgotPassword";
 import ForgotPassword from "./pages/ForGotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 
 const isAuthenticated = () => !!localStorage.getItem("token");
@@ -26,6 +27,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/admin" element={isAuthenticated() ? <AdminDashboard /> : <Navigate to="/login" />} />
 
         {/* All Protected Routes with Layout */}

@@ -12,7 +12,7 @@ const ForgotPassword = () => {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:8000/password/forgot", {
+      const response = await fetch("http://localhost:8000/auth/forgot-password", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
